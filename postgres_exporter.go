@@ -1002,7 +1002,11 @@ func main() {
 	secret := os.Getenv("DOCKER_SECRET_NAME")
 	if len(secret) != 0 {
 		log.Infof("Using Docker secrets file")
-		dat := ioutil.ReadFile("/run/secrets/" + secret)
+		secret_path := fmt.Sprint("/run/secrets/" + string(secret))
+		dat, err := ioutil.ReadFile(secret_path)
+		if err != nil {
+			panic(err)
+		}
 		os.Setenv("PGPASSWORD", string(dat))
 	}
 
