@@ -996,6 +996,18 @@ func main() {
 		dumpMaps()
 		return
 	}
+	// Docker-secrets support.  Check if DOCKER_SECRET_NAME is defined and if set
+	// to PGPASSWORD env variable. PGPASSFILE requires special formatting that
+	// over complicates the nature of docker secrets
+	secret := os.Getenv("DOCKER_SECRET_NAME")
+	if len(secret) != 0 {
+		log.Infof("Using Docker secrets file")
+		dat, err := ioutil.ReadFile("/run/secrets/" + secret)
+		if err != nil {
+			return err
+		}
+		os.Setenv("PGPASSWORD", string(dat))
+	}
 
 	dsn := os.Getenv("DATA_SOURCE_NAME")
 	if len(dsn) == 0 {
