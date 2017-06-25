@@ -1007,7 +1007,12 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+	// setting pgpassword doesn't appear to be working 	
 		os.Setenv("PGPASSWORD", string(dat))
+        // going to append password= onto the connection string
+		os.Setenv("DATA_SOURCE_NAME", fmt.Sprint(os.Getenv("DATA_SOURCE_NAME") + " password=" + string(dat)))
+	// debugging
+	//	fmt.Println("DATA_SOURCE_NAME:", os.Getenv("DATA_SOURCE_NAME"))
 	}
 
 	dsn := os.Getenv("DATA_SOURCE_NAME")
