@@ -1,3 +1,11 @@
+# Forked to add support for docker secrets
+## postgres_exporter.go has been reconfigured in a manner that requires DATA_SOURCE_NAME be entered in NON-URI format i.e. DATA_SOURCE_NAME="user=postgres host=/var/run/postgresql/ sslmode=disable" 
+DOCKER_SECRET_NAME: {{enter name of attached secret }}
+
+Script will read contents of that file and append in to the connect string as password=
+
+Traditional "pgpass" files are formated more intricately than just the password in a file.  The code also sets the value of this file to env varaible PGPASSWORD however that doesn't seem to be working
+
 [![Build Status](https://travis-ci.org/wrouesnel/postgres_exporter.svg?branch=master)](https://travis-ci.org/wrouesnel/postgres_exporter)
 [![Coverage Status](https://coveralls.io/repos/github/wrouesnel/postgres_exporter/badge.svg?branch=master)](https://coveralls.io/github/wrouesnel/postgres_exporter?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wrouesnel/postgres_exporter)](https://goreportcard.com/report/github.com/wrouesnel/postgres_exporter)
