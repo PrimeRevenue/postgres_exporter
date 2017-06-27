@@ -1,5 +1,5 @@
 # Forked to add support for docker secrets
-## postgres_exporter.go has been reconfigured in a manner that requires DATA_SOURCE_NAME be entered in NON-URI format i.e. DATA_SOURCE_NAME="user=postgres host=/var/run/postgresql/ sslmode=disable" 
+## postgres_exporter.go has been reconfigured in a manner that requires DATA_SOURCE_NAME be entered in NON-URI format i.e. DATA_SOURCE_NAME="user=postgres host=192.168.1.1 sslmode=disable" 
 DOCKER_SECRET_NAME: {{enter name of attached secret }}
 
 Script will read contents of that file and append in to the connect string as password=
@@ -32,11 +32,11 @@ export DATA_SOURCE_NAME="postgresql://login:password@hostname:port/dbname"
 ./postgres_exporter <flags>
 ```
 
-To build the dockerfile, run `make docker`. 
+To build the dockerfile, run `make docker`.
 
-This will build the docker image as `wrouesnel/postgres_exporter:latest`. This 
-is a minimal docker image containing *just* postgres_exporter. By default no SSL 
-certificates are included, if you need to use SSL you should either bind-mount 
+This will build the docker image as `wrouesnel/postgres_exporter:latest`. This
+is a minimal docker image containing *just* postgres_exporter. By default no SSL
+certificates are included, if you need to use SSL you should either bind-mount
 `/etc/ssl/certs/ca-certificates.crt` or derive a new image containing them.
 
 ### Vendoring
@@ -44,7 +44,7 @@ Package vendoring is handled with [`govendor`](https://github.com/kardianos/gove
 
 ### Flags
 
-* `web.listen-address` 
+* `web.listen-address`
   Address to listen on for web interface and telemetry.
 
 * `web.telemetry-path`
